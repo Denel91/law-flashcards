@@ -303,7 +303,7 @@ export default function AreaPage() {
         }
     };
 
-    const handleStudied = async (id, isCorrect) => {
+    /*const handleStudied = async (id, isCorrect) => {
         try {
             // 1) Update ottimistico della card nello stato
             const nowISO = new Date().toISOString();
@@ -339,6 +339,65 @@ export default function AreaPage() {
             console.error('Errore aggiornamento statistiche:', error);
             toast.error("Errore nell'aggiornamento");
             // fallback: ricarica tutto solo in caso di errore
+            await loadFlashcards();
+            await loadStats();
+        }
+    };*/
+
+    const handleStudied = async (id, isCorrect) => {
+        try {
+            // 1) Update ottimistico della card nello stato locale
+            const nowISO = new Date().toISOString();
+            setFlashcards(prev => prev.map(card =>
+                card.id === id
+                    ? {
+                        ...card,
+                        studied_count: (card.studied_count || 0) + 1,
+                        correct_count: (card.correct_count || 0) + (isCorrect ? 1 : 0),
+                        last_studied: nowISO,
+                    }
+                    : card
+            ));
+
+            // 2) Aggiorna il backend e ottieni il record aggiornato
+            const updated = await updateFlashcardStats(id, isCorrect);
+            if (updated) {
+                setFlashcards(prev => prev.map(card =>
+                    card.id === id ? { ...card, ...updated } : card
+                ));
+            }
+
+            // 3) Carica le nuove statistiche (che includono il calcolo dello streak)
+            const newStats = await getAreaStats(areaId);
+
+            // --- LOGICA STREAK ---
+            // Se lo streak è aumentato rispetto a quello attuale, mostriamo un toast speciale
+            const oldStreak = stats?.streak || 0;
+            if (newStats.streak > oldStreak) {
+                toast.success(`Streak di ${newStats.streak} giorni! Continua così! 🔥`, {
+                    duration: 4000,
+                    icon: '🔥',
+                    style: {
+                        borderRadius: '12px',
+                        background: '#333',
+                        color: '#fff',
+                    },
+                });
+            } else if (isCorrect) {
+                // Feedback standard per risposta corretta
+                toast.success('Conoscevi la risposta! 🎉');
+            } else {
+                // Feedback standard per risposta errata
+                toast('Da rivedere 📚', { icon: '💡', duration: 1000 });
+            }
+
+            // Aggiorna lo stato delle statistiche globali della pagina
+            setStats(newStats);
+
+        } catch (error) {
+            console.error('Errore aggiornamento statistiche:', error);
+            toast.error("Errore nell'aggiornamento");
+            // fallback: ricarica tutto solo in caso di errore critico
             await loadFlashcards();
             await loadStats();
         }

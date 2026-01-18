@@ -26,39 +26,48 @@ export default function AreaStats({ stats }) {
     // Se il backend manda già `accuracy`, la ricalcoliamo comunque (stessa semantica) per sicurezza.
     const accuracy = totalStudies > 0 ? Math.round((totalCorrect / totalStudies) * 100) : 0;
 
+    const streak = stats?.streak ?? 0;
+
     return (
-        <div className="grid grid-cols-2 md:grid-cols-7 gap-4 mb-6">
-            <div className="bg-white rounded-lg shadow p-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div className="bg-white rounded-lg shadow p-4 border-b-4 border-orange-500">
+                <div className="text-sm text-gray-600 flex items-center gap-1">
+                    Streak 🔥
+                </div>
+                <div className="text-2xl font-bold text-orange-600">{streak} gg</div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow p-4 border-b-4 border-blue-500">
                 <div className="text-sm text-gray-600">Carte Totali</div>
                 <div className="text-2xl font-bold text-blue-600">{totalCards}</div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-4">
+            <div className="bg-white rounded-lg shadow p-4 border-b-4 border-teal-500">
                 <div className="text-sm text-gray-600">Studiate</div>
                 <div className="text-2xl font-bold text-teal-600">{studiedCards}</div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-4">
+            <div className="bg-white rounded-lg shadow p-4 border-b-4 border-amber-500">
                 <div className="text-sm text-gray-600">Mai studiate</div>
                 <div className="text-2xl font-bold text-amber-600">{neverStudiedCards}</div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-4">
+            <div className="bg-white rounded-lg shadow p-4 border-b-4 border-purple-500">
                 <div className="text-sm text-gray-600">Tentativi</div>
                 <div className="text-2xl font-bold text-purple-600">{totalStudies}</div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-4">
+            <div className="bg-white rounded-lg shadow p-4 border-b-4 border-green-500">
                 <div className="text-sm text-gray-600">Risposte corrette</div>
                 <div className="text-2xl font-bold text-green-600">{totalCorrect}</div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-4">
+            <div className="bg-white rounded-lg shadow p-4 border-b-4 border-red-500">
                 <div className="text-sm text-gray-600">Risposte errate</div>
                 <div className="text-2xl font-bold text-red-600">{totalWrong}</div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-4">
+            <div className="bg-white rounded-lg shadow p-4 border-b-4 border-indigo-500">
                 <div className="text-sm text-gray-600">Precisione</div>
                 <div className="text-2xl font-bold text-indigo-600">{accuracy}%</div>
             </div>

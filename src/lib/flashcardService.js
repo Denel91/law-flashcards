@@ -151,6 +151,51 @@ export async function updateFlashcardStats(id, isCorrect) {
     return updated;
 }
 
+// Calcola lo streak di giorni consecutivi di studio
+export const calculateStreak = (dates) => {
+    if (!Array.isArray(dates) || dates.length === 0) return 0;
+
+    const toYmd = (d) => {
+        const dt = d instanceof Date ? d : new Date(d);
+        if (Number.isNaN(dt.getTime())) return null;
+        return dt.toISOString().slice(0, 10); // YYYY-MM-DD
+    };
+
+    // Estrai YYYY-MM-DD, rimuovi null/invalidi e duplicati, ordina decrescente
+    const uniqueDates = [...new Set(dates.map(toYmd).filter(Boolean))].sort((a, b) =>
+        b.localeCompare(a)
+    );
+
+    if (uniqueDates.length === 0) return 0;
+
+    const todayYmd = toYmd(new Date());
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayYmd = toYmd(yesterday);
+
+    // Se non si è studiato né oggi né ieri, streak rotto
+    if (uniqueDates[0] !== todayYmd && uniqueDates[0] !== yesterdayYmd) return 0;
+
+    const startOfDay = (ymd) => new Date(`${ymd}T00:00:00.000Z`).getTime();
+
+    let streak = 1;
+    let prev = startOfDay(uniqueDates[0]);
+
+    for (let i = 1; i < uniqueDates.length; i++) {
+        const cur = startOfDay(uniqueDates[i]);
+        const diffDays = (prev - cur) / (1000 * 60 * 60 * 24);
+
+        if (diffDays === 1) {
+            streak++;
+            prev = cur;
+        } else if (diffDays > 1) {
+            break;
+        }
+    }
+
+    return streak;
+};
+
 // Ottieni statistiche per area
 export async function getAreaStats(area) {
     const supabase = createClient();
@@ -170,6 +215,15 @@ export async function getAreaStats(area) {
         .from('flashcards')
         .select('studied_count, correct_count, last_studied')
         .eq('area', area);
+
+    const { data: cards } = await supabase
+        .from('flashcards')
+        .select('last_studied')
+        .eq('area', area)
+        .not('last_studied', 'is', null);
+
+    const studyDates = cards?.map(c => c.last_studied) || [];
+    const streak = calculateStreak(studyDates);
 
     if (error) throw error;
 
@@ -210,6 +264,7 @@ export async function getAreaStats(area) {
         totalStudies,
         totalCorrect,
         accuracy: Number(accuracy.toFixed(1)),
+        streak: streak
     };
 }
 
