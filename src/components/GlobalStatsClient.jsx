@@ -94,43 +94,37 @@ export default function GlobalStatsClient() {
 
                 {/* Metriche Globali */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-                    <div
-                        className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                    <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow border-b-4 border-blue-500">
                         <div className="text-sm font-medium text-gray-500 mb-1">Flashcard Totali</div>
                         <div className="text-3xl font-bold text-blue-600">{globalTotals.totalCards}</div>
                     </div>
-                    <div
-                        className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                    <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow border-b-4 border-teal-500">
                         <div className="text-sm font-medium text-gray-500 mb-1">Studiate</div>
                         <div className="text-3xl font-bold text-teal-600">{globalTotals.studiedCards}</div>
                     </div>
-                    <div
-                        className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                    <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow border-b-4 border-amber-500">
                         <div className="text-sm font-medium text-gray-500 mb-1">Mai studiate</div>
                         <div className="text-3xl font-bold text-amber-600">{globalTotals.neverStudiedCards}</div>
                     </div>
-                    <div
-                        className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                    <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow border-b-4 border-green-500">
                         <div className="text-sm font-medium text-gray-500 mb-1">Risposte corrette</div>
                         <div className="text-3xl font-bold text-green-600">{globalCorrect}</div>
                     </div>
-                    <div
-                        className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                    <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow border-b-4 border-red-500">
                         <div className="text-sm font-medium text-gray-500 mb-1">Risposte errate</div>
                         <div className="text-3xl font-bold text-red-600">{globalWrong}</div>
                     </div>
-                    <div
-                        className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                    <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow border-b-4 border-purple-500">
                         <div className="text-sm font-medium text-gray-500 mb-1">Tentativi</div>
                         <div className="text-3xl font-bold text-purple-600">{globalTotals.totalStudies}</div>
                     </div>
                     <div
-                        className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                        className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow border-b-4 border-sky-500">
                         <div className="text-sm font-medium text-gray-500 mb-1">Studi per carta</div>
                         <div className="text-3xl font-bold text-sky-600">{globalStudiesPerCard}</div>
                     </div>
                     <div
-                        className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                        className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow border-b-4 border-indigo-500">
                         <div className="text-sm font-medium text-gray-500 mb-1">Precisione</div>
                         <div className="text-3xl font-bold text-indigo-600">{globalAccuracy}%</div>
                     </div>
