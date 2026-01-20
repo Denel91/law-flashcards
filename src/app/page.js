@@ -88,10 +88,10 @@ export default function Home() {
                             Piattaforma di Studio Giuridico
                         </span>
                     </div>
-                    <h1 className="text-6xl md:text-7xl font-extrabold bg-linear-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-6 leading-tight">
+                    <h1 className="text-6xl md:text-7xl font-black tracking-tight md:tracking-tighter bg-linear-to-r from-slate-950 via-indigo-900 to-sky-800 bg-clip-text text-transparent mb-6 leading-[1.05] drop-shadow-[0_2px_18px_rgba(15,23,42,0.20)]">
                         Flashcards Giuridiche
                     </h1>
-                    <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                    <p className="text-lg md:text-2xl font-medium text-slate-700/90 leading-relaxed md:leading-snug tracking-[-0.01em] mb-10 max-w-2xl mx-auto drop-shadow-[0_1px_8px_rgba(15,23,42,0.10)]">
                         Potenzia il tuo apprendimento con flashcards interattive
                     </p>
 

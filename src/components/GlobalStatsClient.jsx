@@ -89,7 +89,9 @@ export default function GlobalStatsClient() {
                     <h1 className="text-6xl md:text-7xl font-extrabold bg-linear-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-6 leading-tight">
                         Dashboard Statistiche
                     </h1>
-                    <p className="text-2xl text-gray-600">Panoramica completa del tuo progresso nello studio</p>
+                    <p className="text-lg md:text-2xl font-medium text-slate-700/90 leading-relaxed md:leading-snug tracking-[-0.01em] max-w-3xl mx-auto drop-shadow-[0_1px_8px_rgba(15,23,42,0.10)]">
+                        Panoramica completa del tuo progresso nello studio
+                    </p>
                 </div>
 
                 {/* Metriche Globali */}
