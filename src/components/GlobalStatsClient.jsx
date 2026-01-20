@@ -174,6 +174,7 @@ export default function GlobalStatsClient() {
                                 const totalStudies = Number(areaStats.totalStudies ?? 0);
                                 const studiedCards = Number(areaStats.studiedCards ?? 0);
                                 const totalCards = Number(areaStats.totalCards ?? 0);
+                                const neverStudiedCards = Number(areaStats.neverStudiedCards ?? 0);
                                 const accuracy = Number(areaStats.accuracy ?? 0);
                                 const wrong = Math.max(0, totalStudies - totalCorrect);
                                 const progress = totalCards > 0 ? Math.min(100, Math.round((studiedCards / totalCards) * 100)) : 0;
@@ -191,7 +192,7 @@ export default function GlobalStatsClient() {
                                             {studiedCards}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-amber-600 font-bold">
-                                            {Number(areaStats.neverStudiedCards ?? 0)}
+                                            {neverStudiedCards}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-green-600 font-bold">
                                             {totalCorrect}
