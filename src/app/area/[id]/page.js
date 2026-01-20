@@ -303,47 +303,7 @@ export default function AreaPage() {
         }
     };
 
-    /*const handleStudied = async (id, isCorrect) => {
-        try {
-            // 1) Update ottimistico della card nello stato
-            const nowISO = new Date().toISOString();
-            setFlashcards(prev => prev.map(card =>
-                card.id === id
-                    ? {
-                        ...card,
-                        studied_count: (card.studied_count || 0) + 1,
-                        correct_count: (card.correct_count || 0) + (isCorrect ? 1 : 0),
-                        last_studied: nowISO,
-                    }
-                    : card
-            ));
-
-            // 2) Aggiorna il backend e usa l'eventuale record aggiornato che ritorna
-            const updated = await updateFlashcardStats(id, isCorrect);
-            if (updated) {
-                setFlashcards(prev => prev.map(card =>
-                    card.id === id ? { ...card, ...updated } : card
-                ));
-            }
-
-            // 3) Aggiorna solo le statistiche
-            await loadStats();
-
-            // 4) Feedback utente
-            if (isCorrect) {
-                toast.success('Conoscevi la risposta! 🎉');
-            } else {
-                toast('Da rivedere 📚', { icon: '💡', duration: 1000 });
-            }
-        } catch (error) {
-            console.error('Errore aggiornamento statistiche:', error);
-            toast.error("Errore nell'aggiornamento");
-            // fallback: ricarica tutto solo in caso di errore
-            await loadFlashcards();
-            await loadStats();
-        }
-    };*/
-
+    // Gestisci aggiornamento statistiche dopo studio
     const handleStudied = async (id, isCorrect) => {
         try {
             // 1) Update ottimistico della card nello stato locale
