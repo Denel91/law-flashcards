@@ -118,13 +118,11 @@ export default function GlobalStatsClient() {
                         <div className="text-sm font-medium text-gray-500 mb-1">Tentativi</div>
                         <div className="text-3xl font-bold text-purple-600">{globalTotals.totalStudies}</div>
                     </div>
-                    <div
-                        className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow border-b-4 border-sky-500">
+                    <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow border-b-4 border-sky-500">
                         <div className="text-sm font-medium text-gray-500 mb-1">Studi per carta</div>
                         <div className="text-3xl font-bold text-sky-600">{globalStudiesPerCard}</div>
                     </div>
-                    <div
-                        className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow border-b-4 border-indigo-500">
+                    <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow border-b-4 border-indigo-500">
                         <div className="text-sm font-medium text-gray-500 mb-1">Precisione</div>
                         <div className="text-3xl font-bold text-indigo-600">{globalAccuracy}%</div>
                     </div>
@@ -169,48 +167,49 @@ export default function GlobalStatsClient() {
                             </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
-                            {Object.entries(stats || {}).map(([areaKey, areaStats]) => {
+                            {Object.entries(stats ?? {}).map(([areaKey, areaStatsRaw]) => {
+                                const areaStats = areaStatsRaw ?? {};
                                 const config = areaConfig[areaKey];
-                                const correct = areaStats.totalCorrect || 0;
-                                const wrong = Math.max(0, (areaStats.totalStudies || 0) - correct);
-                                const progress =
-                                    areaStats.totalCards > 0
-                                        ? Math.min(100, Math.round(((areaStats.studiedCards || 0) / areaStats.totalCards) * 100))
-                                        : 0;
+                                const totalCorrect = Number(areaStats.totalCorrect ?? 0);
+                                const totalStudies = Number(areaStats.totalStudies ?? 0);
+                                const studiedCards = Number(areaStats.studiedCards ?? 0);
+                                const totalCards = Number(areaStats.totalCards ?? 0);
+                                const accuracy = Number(areaStats.accuracy ?? 0);
+                                const wrong = Math.max(0, totalStudies - totalCorrect);
+                                const progress = totalCards > 0 ? Math.min(100, Math.round((studiedCards / totalCards) * 100)) : 0;
 
                                 return (
                                     <tr key={areaKey} className="hover:bg-gray-50 transition-colors">
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 flex items-center gap-2">
                                             <span className="text-xl">{config?.icon}</span>
-                                            {config?.name || areaKey}
+                                            {config?.name ?? areaKey}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-blue-600 font-bold">
-                                            {areaStats.totalCards || 0}
+                                            {totalCards}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-teal-600 font-bold">
-                                            {areaStats.studiedCards || 0}
+                                            {studiedCards}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-amber-600 font-bold">
-                                            {areaStats.neverStudiedCards || 0}
+                                            {Number(areaStats.neverStudiedCards ?? 0)}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-green-600 font-bold">
-                                            {correct}
+                                            {totalCorrect}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-red-600 font-bold">
                                             {wrong}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-sky-600 font-bold">
-                                            {areaStats.totalStudies || 0}
+                                            {totalStudies}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-indigo-600 font-bold">
-                                            {(areaStats.accuracy || 0)}%
+                                            {accuracy}%
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm">
                                             <div className="w-full bg-gray-200 rounded-full h-3">
-                                                <div
-                                                    className={`h-3 rounded-full bg-linear-to-r ${config?.color || ""}`}
-                                                    style={{width: `${progress}%`}}
-                                                ></div>
+                                                <div className={`h-3 rounded-full bg-linear-to-r ${config?.color ?? ""}`}
+                                                    style={{ width: `${progress}%` }}
+                                                />
                                             </div>
                                         </td>
                                     </tr>
@@ -225,19 +224,16 @@ export default function GlobalStatsClient() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {Object.entries(stats || {}).map(([areaKey, areaStats]) => {
                         const config = areaConfig[areaKey];
+
                         if (!config) return null;
 
-                        const progress =
-                            areaStats.totalCards > 0 ? (((areaStats.studiedCards || 0) / areaStats.totalCards) * 100).toFixed(0) : 0;
-
+                        const progress = areaStats.totalCards > 0 ? (((areaStats.studiedCards || 0) / areaStats.totalCards) * 100).toFixed(0) : 0;
                         const correct = areaStats.totalCorrect || 0;
                         const wrong = Math.max(0, (areaStats.totalStudies || 0) - correct);
 
                         return (
-                            <div key={areaKey}
-                                 className={`bg-white rounded-xl shadow-sm border ${config.borderColor} overflow-hidden hover:shadow-md transition-shadow`}>
-                                <div
-                                    className={`bg-linear-to-r ${config.bgColor} px-6 py-4 border-b ${config.borderColor}`}>
+                            <div key={areaKey} className={`bg-white rounded-xl shadow-sm border ${config.borderColor} overflow-hidden hover:shadow-md transition-shadow`}>
+                                <div className={`bg-linear-to-r ${config.bgColor} px-6 py-4 border-b ${config.borderColor}`}>
                                     <div className="flex items-center gap-3">
                                         <span className="text-3xl">{config.icon}</span>
                                         <h3 className={`text-lg font-bold ${config.textColor}`}>{config.name}</h3>
@@ -250,9 +246,7 @@ export default function GlobalStatsClient() {
                                             <span className="font-bold text-gray-900">{progress}%</span>
                                         </div>
                                         <div className="bg-gray-200 rounded-full h-3 overflow-hidden">
-                                            <div
-                                                className={`h-full bg-linear-to-r ${config.color} transition-all duration-500`}
-                                                style={{width: `${progress}%`}}></div>
+                                            <div className={`h-full bg-linear-to-r ${config.color} transition-all duration-500`} style={{width: `${progress}%`}}></div>
                                         </div>
                                     </div>
 
@@ -263,8 +257,7 @@ export default function GlobalStatsClient() {
                                         </div>
                                         <div className="bg-gray-50 rounded-lg p-3">
                                             <div className="text-xs text-gray-500 mb-1">Studiate</div>
-                                            <div
-                                                className="text-xl font-bold text-teal-600">{areaStats.studiedCards || 0}</div>
+                                            <div className="text-xl font-bold text-teal-600">{areaStats.studiedCards || 0}</div>
                                         </div>
                                         <div className="bg-gray-50 rounded-lg p-3">
                                             <div className="text-xs text-gray-500 mb-1">Mai studiate</div>
@@ -272,8 +265,7 @@ export default function GlobalStatsClient() {
                                         </div>
                                         <div className="bg-gray-50 rounded-lg p-3">
                                             <div className="text-xs text-gray-500 mb-1">Precisione</div>
-                                            <div
-                                                className={`text-xl font-bold ${
+                                            <div className={`text-xl font-bold ${
                                                     (areaStats.accuracy || 0) >= 80
                                                         ? "text-green-600"
                                                         : (areaStats.accuracy || 0) >= 60
