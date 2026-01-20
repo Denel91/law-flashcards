@@ -70,6 +70,11 @@ export default function Home() {
 
     const totalCards = counts.civile + counts.amministrativo + counts.penale;
 
+    const stats = [
+        { id: 'total-cards', value: totalCards, label: 'Flashcards Totali' },
+        { id: 'total-areas', value: areas.length, label: 'Aree di Studio' },
+    ];
+
     return (
         <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50">
             {/* Pattern di sfondo decorativo */}
@@ -92,16 +97,16 @@ export default function Home() {
 
                     {/* Statistiche totali */}
                     {!isLoading && totalCards > 0 && (
-                        <div className="flex justify-center gap-8 mb-8">
-                            <div className="bg-white/60 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-lg border border-white/20">
-                                <div className="text-3xl font-bold text-blue-600">{totalCards}</div>
-                                <div className="text-md text-gray-600">Flashcards Totali</div>
+                    <section className="flex justify-center gap-8 mb-8" aria-label="Statistiche principali">
+                        {stats.map(({ id, value, label }) => (
+                            <div key={id} className="bg-white/60 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-lg border border-white/20" role="status" aria-live="polite">
+                                <div className="text-3xl font-bold text-sky-700">
+                                    {value}
+                                </div>
+                                <div className="text-md text-gray-700">{label}</div>
                             </div>
-                            <div className="bg-white/60 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-lg border border-white/20">
-                                <div className="text-3xl font-bold text-indigo-600">3</div>
-                                <div className="text-md text-gray-600">Aree di Studio</div>
-                            </div>
-                        </div>
+                        ))}
+                    </section>
                     )}
                 </header>
 
