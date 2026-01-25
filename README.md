@@ -20,6 +20,8 @@ Un'applicazione web moderna e interattiva per studiare il diritto attraverso fla
 - ✅ **Barra di progresso** visiva per tracciare lo studio
 - ✅ **Ricerca e filtri** (testo, studiate / non studiate)
 - ✅ **Statistiche** per area e globali (`/global-stats`)
+- ✅ **Spaced Repetition (SRS)** opzionale: programma ripassi automatici per dare priorità alle card meno memorizzate
+- ✅ **Autenticazione opzionale (Supabase)**: salva i progressi e le statistiche per utente quando abilitato
 
 ### 🎨 UX/UI Moderna
 - 🌈 **Gradienti colorati** personalizzati per ogni area
@@ -161,7 +163,7 @@ Per segnalare bug o proporre miglioramenti, apri una issue sul repository.
 
 ## 🙏 Ringraziamenti
 
-<div align="center">
+<div style="text-align:center">
 
 Questo progetto è reso possibile grazie a:
 
@@ -180,7 +182,7 @@ Questo progetto è reso possibile grazie a:
 
 ---
 
-## 📄 Licenza
+## 📄 Licenza 
 
 Questo progetto è rilasciato sotto licenza **MIT**. Vedi il file [LICENSE.MD](./LICENSE.MD) per i dettagli.
 
